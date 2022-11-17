@@ -5,9 +5,7 @@ const auth = require('json-server-auth')
 
 const app = jsonServer.create()
 const router = jsonServer.router(path.resolve(__dirname + '/data.json'))
-const middlewares = jsonServer.defaults({
-  static: path.resolve(__dirname + '/../build/'),
-})
+const middlewares = jsonServer.defaults({ static: './build' })
 
 router.db._.id = 'uuid'
 app.db = router.db
