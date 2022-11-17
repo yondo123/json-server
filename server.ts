@@ -1,9 +1,13 @@
 const jsonServer = require('json-server')
+const path = require('path')
 
 const auth = require('json-server-auth')
 
 const app = jsonServer.create()
-const router = jsonServer.router('db.json')
+const router = jsonServer.router(path.resolve(__dirname + '/data.json'))
+const middlewares = jsonServer.defaults({
+  static: path.resolve(__dirname + '/../build/'),
+})
 
 router.db._.id = 'uuid'
 app.db = router.db
@@ -13,6 +17,7 @@ const rules = auth.rewriter({
   accounts: 660,
 })
 
+app.use(middlewares)
 app.use(rules)
 app.use(auth)
 app.use(router)
